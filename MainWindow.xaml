@@ -1,0 +1,96 @@
+﻿<Window x:Class="LootMaster.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        Title="Loot Master" Height="450" Width="800" MaxWidth="800"
+        WindowStartupLocation="CenterScreen"
+        Background="LightGray">
+    <Window.Resources>
+        <!-- Цвета -->
+        <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="LightGray"/>
+        <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="LightBlue"/>
+        <SolidColorBrush x:Key="PrimaryForegroundColor" Color="Black"/>
+        <SolidColorBrush x:Key="SecondaryForegroundColor" Color="White"/>
+        <SolidColorBrush x:Key="PrimaryBorderColor" Color="DarkGray"/>
+        <SolidColorBrush x:Key="SecondaryBorderColor" Color="DarkBlue"/>
+
+        <!-- Шрифты -->
+        <FontFamily x:Key="PrimaryFontFamily">Segoe UI</FontFamily>
+        <system:Double x:Key="PrimaryFontSize">12</system:Double>
+        <FontWeight x:Key="PrimaryFontWeight">Normal</FontWeight>
+        <FontWeight x:Key="BoldFontWeight">Bold</FontWeight>
+
+        <!-- Стиль для кнопок -->
+        <Style x:Key="BaseButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="{StaticResource SecondaryBackgroundColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryForegroundColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SecondaryBorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="{StaticResource PrimaryFontFamily}"/>
+            <Setter Property="FontSize" Value="{StaticResource PrimaryFontSize}"/>
+            <Setter Property="FontWeight" Value="{StaticResource BoldFontWeight}"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource SecondaryBorderColor}"/>
+                    <Setter Property="Foreground" Value="{StaticResource SecondaryForegroundColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для текстовых полей -->
+        <Style x:Key="BaseTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="23"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryForegroundColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="{StaticResource PrimaryFontFamily}"/>
+            <Setter Property="FontSize" Value="{StaticResource PrimaryFontSize}"/>
+            <Setter Property="FontWeight" Value="{StaticResource PrimaryFontWeight}"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <DataGrid x:Name="dataGridLoot" AutoGenerateColumns="True" Margin="10,60,10,110" SelectionChanged="dataGridLoot_SelectionChanged" CanUserAddRows="False"/>
+        <TextBlock x:Name="textBlockInfo" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,90" Text="Total records: 0, Selected record: None"/>
+        
+        <!-- Объединяем кнопки в один StackPanel -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50">
+            <Button x:Name="buttonAddLoot" Content="Add Loot" Style="{StaticResource BaseButtonStyle}" Click="buttonAddLoot_Click"/>
+            <Button x:Name="buttonUpdateLoot" Content="Update Loot" Style="{StaticResource BaseButtonStyle}" Click="buttonUpdateLoot_Click"/>
+            <Button x:Name="buttonDeleteLoot" Content="Delete Loot" Style="{StaticResource BaseButtonStyle}" Margin="20,0,0,0" Click="buttonDeleteLoot_Click"/>
+            <Button x:Name="buttonFirst" Content="First" Style="{StaticResource BaseButtonStyle}" Margin="50,0,0,0" Click="buttonFirst_Click"/>
+            <Button x:Name="buttonPrevious" Content="Previous" Style="{StaticResource BaseButtonStyle}" Margin="10,0,0,0" Click="buttonPrevious_Click"/>
+            <Button x:Name="buttonNext" Content="Next" Style="{StaticResource BaseButtonStyle}" Margin="10,0,0,0" Click="buttonNext_Click"/>
+            <Button x:Name="buttonLast" Content="Last" Style="{StaticResource BaseButtonStyle}" Margin="10,0,0,0" Click="buttonLast_Click"/>
+            <Button x:Name="buttonSelectFolder" Content="Select Folder" Style="{StaticResource BaseButtonStyle}" Margin="45,0,0,0" HorizontalAlignment="Right" Click="buttonSelectFolder_Click"/>
+        </StackPanel>
+
+        <!-- Добавляем элементы управления для поиска -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,15,0,0">
+        <TextBox x:Name="textBoxSearch" Style="{StaticResource BaseTextBoxStyle}"/>
+        <Button x:Name="buttonSearch" Content="Search" Style="{StaticResource BaseButtonStyle}" Click="buttonSearch_Click"/>
+        <Button x:Name="buttonShowAll" Content="Show All" Style="{StaticResource BaseButtonStyle}" Click="buttonShowAll_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
