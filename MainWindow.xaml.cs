@@ -220,11 +220,22 @@ namespace LootMaster
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(textBoxSearch.Text, out int searchValue))
+            var searchText = textBoxSearch.Text.Trim();
+            if (!string.IsNullOrEmpty(searchText))
             {
                 var dataTable = db.ReadLoot();
                 var view = dataTable.DefaultView;
-                view.RowFilter = $"item_id = {searchValue} OR loot_pack_id = {searchValue}";
+
+                if (int.TryParse(searchText, out int numericValue))
+                {
+                    // Если searchText является числом, ищем по item_id, loot_pack_id и Name
+                    view.RowFilter = $"(item_id = {numericValue} OR loot_pack_id = {numericValue} OR Name LIKE '%{searchText}%')";
+                }
+                else
+                {
+                    // Если searchText не является числом, ищем только по Name
+                    view.RowFilter = $"Name LIKE '%{searchText}%'";
+                }
 
                 if (view.Count > 0)
                 {
@@ -239,7 +250,7 @@ namespace LootMaster
             }
             else
             {
-                MessageBox.Show("Please enter a valid integer value for search.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter a valid search term.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
